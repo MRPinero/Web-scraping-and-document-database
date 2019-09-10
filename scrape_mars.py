@@ -4,13 +4,13 @@ from splinter import Browser
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 import requests
-import pandas as pd
+##import pandas as pd
 import time
 
 # Set the chromedriver path
 options = webdriver.ChromeOptions() 
 options.add_argument('--headless')
-driver=webdriver.Chrome("C:/Data_Visualization//UCFLM20190409DATA//Homework//12-Web-Scraping-and-Document-Databases//chromedriver.exe", chrome_options=options)
+driver=webdriver.Chrome("C:/Data_Visualization//UCFLM20190409DATA//Homework//12-Web-Scraping-and-Document-Databases//chromedriver.exe", options=options)
 executable_path = {"executable_path": "C:/Data_Visualization//UCFLM20190409DATA//Homework//12-Web-Scraping-and-Document-Databases//chromedriver.exe"}
 browser = Browser("chrome", **executable_path, headless=False)
 
@@ -72,13 +72,13 @@ def scrape():
 
     html = browser.html
     weather_soup = bs(html, 'html.parser')
+     # Set weather
+    Mars_weather_tweet = Mars_weather_tweet.find('p', 'tweet-text').get_text()
 
     # ind a tweet with the data-name `Mars Weather`
     Mars_weather_tweet = weather_soup.find('div', attrs={"class": "tweet", "data-name": "Mars Weather"})
 
-    # Set weather
-    Mars_weather_tweet = Mars_weather_tweet.find('p', 'tweet-text').get_text()
-
+    
 # Mars Hemisphere Data
     Mars_hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(Mars_hemispheres_url)
